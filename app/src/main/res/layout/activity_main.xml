@@ -136,25 +136,26 @@
                             android:textSize="16dp"
                             android:textStyle="bold" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"></LinearLayout>
-                        <Button
-                            android:id="@+id/btn_webview"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@drawable/johnson_login_background"
-                            android:elevation="1dp"
-                            android:stateListAnimator="@animator/button_elevation"
-                            android:text="Go Website"
-                            android:textAlignment="center"
-                            android:textAllCaps="false"
-                            android:textColor="#FFFFFF"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="10dp"></LinearLayout>-->
+<!--                        <Button-->
+<!--                            android:id="@+id/btn_webview"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="45dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_marginLeft="20dp"-->
+<!--                            android:layout_marginRight="20dp"-->
+<!--                            android:background="@drawable/johnson_login_background"-->
+<!--                            android:elevation="1dp"-->
+<!--                            android:stateListAnimator="@animator/button_elevation"-->
+<!--                            android:text="Go Website"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textAllCaps="false"-->
+<!--                            android:textColor="#FFFFFF"-->
+<!--                            android:textSize="16dp"-->
+<!--                            android:textStyle="bold"-->
+<!--                            />-->
 
 
                         <LinearLayout
@@ -178,7 +179,26 @@
                             android:textSize="16dp"
                             android:textStyle="bold" />
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"></LinearLayout>
 
+                        <Button
+                            android:id="@+id/btn_general"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/general_login_background"
+                            android:elevation="1dp"
+                            android:stateListAnimator="@animator/button_elevation"
+                            android:text="General"
+                            android:textAlignment="center"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
 
 
 

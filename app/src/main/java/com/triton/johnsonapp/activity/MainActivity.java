@@ -31,9 +31,13 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_activity)
     Button btn_activity;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.btn_webview)
-    Button btn_webview;
+    @SuppressLint("NonConstatntResourceId")
+    @BindView(R.id.btn_general)
+    Button btn_general;
+
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.btn_webview)
+//    Button btn_webview;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_goback)
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         webView.setVisibility(View.GONE);
         btn_goback.setVisibility(View.GONE);
-        btn_webview.setVisibility(View.GONE);
+        //btn_webview.setVisibility(View.INVISIBLE);
 
         btn_goback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,22 +91,33 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        btn_webview.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetJavaScriptEnabled")
+
+        btn_general.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progDailog = ProgressDialog.show(MainActivity.this, "Loading","Please wait...", true);
-                progDailog.setCancelable(false);
-                goWebView();
-             
-              /*  Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("http://54.202.95.145/#/admin/groupdetail"));
-                startActivity(intent);*/
+                Intent intent = new Intent(MainActivity.this, GeneralActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.new_right, R.anim.new_left);
 
             }
         });
+
+//        btn_webview.setOnClickListener(new View.OnClickListener() {
+//            @SuppressLint("SetJavaScriptEnabled")
+//            @Override
+//            public void onClick(View view) {
+//                progDailog = ProgressDialog.show(MainActivity.this, "Loading","Please wait...", true);
+//                progDailog.setCancelable(false);
+//                goWebView();
+//
+//              /*  Intent intent = new Intent();
+//                intent.setAction(Intent.ACTION_VIEW);
+//                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+//                intent.setData(Uri.parse("http://54.202.95.145/#/admin/groupdetail"));
+//                startActivity(intent);*/
+//
+//            }
+//        });
     }
 
     private void goWebView() {

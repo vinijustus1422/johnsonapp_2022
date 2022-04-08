@@ -87,6 +87,7 @@
     <string name="row_dimension">Dimension in MM</string>
     <string name="activitybased">Activity Based</string>
     <string name="jobdetail">Job Details</string>
+    <string name="generaldetail">General Details</string>
     <string name="group">Group List</string>
     <string name="activity_list">Activity List</string>
     <string name="info">i</string>
@@ -106,6 +107,21 @@
     <string name="search">Search</string>
     <string name="noofpedning">No of Pending </string>
     <string name="noofnew">No of New  </string>
+    <string name="leaveappln">Leave Appln</string>
+    <string name="subordattendance">Subord Attendance</string>
+    <string name="collectedcheque">Collected Cheque Details</string>
+    <string name="lvapno_text">Lvapno</string>
+    <string name="empno_text">Empno</string>
+    <string name="appr_mgr_text">Appr.Mgr</string>
+    <string name="leave_appl_date_text">Leave Appl.Date</string>
+    <string name="leave_code_text">Leave Code</string>
+    <string name="no_of_days_text">No.Of.Days</string>
+    <string name="frmdt_text">Frmdt</string>
+    <string name="todat">Todt</string>
+    <string name="reason_text">Reason</string>
+    <string name="generaldetail_leaveappln">Leave Appln</string>
+    <string name="generaldetail_subord">Suboard Attendance</string>
+    <string name="crntdate">08-04-2022</string>
 
 
     <style name="table_header" parent="@android:style/TextAppearance.Small">

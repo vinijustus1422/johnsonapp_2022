@@ -6,11 +6,16 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.triton.johnsonapp.R;
 import com.triton.johnsonapp.session.SessionManager;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -30,6 +35,11 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd.MM.yy");
+        Date todayDate = new Date();
+        String thisDate = currentDate.format(todayDate);
+        TextView txt_version = (TextView)findViewById(R.id.txt_version);
+        txt_version.setText("Version "+thisDate+".1");
 
         sessionManager = new SessionManager(this);
 
