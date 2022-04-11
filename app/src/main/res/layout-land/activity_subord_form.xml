@@ -220,7 +220,7 @@
 
                         <LinearLayout
                             android:id="@+id/ll_dropdown"
-                            android:layout_width="@dimen/_200dp"
+                            android:layout_width="@dimen/_100dp"
                             android:layout_height="wrap_content"
                             android:background="@drawable/child_back_ground"
                             android:orientation="horizontal"

@@ -112,7 +112,7 @@
     <string name="collectedcheque">Collected Cheque Details</string>
     <string name="lvapno_text">Lvapno</string>
     <string name="empno_text">Empno</string>
-    <string name="appr_mgr_text">Appr.Mgr</string>
+    <string name="appr_mgr_text">Appr Mgr</string>
     <string name="leave_appl_date_text">Leave Appl.Date</string>
     <string name="leave_code_text">Leave Code</string>
     <string name="no_of_days_text">No.Of.Days</string>

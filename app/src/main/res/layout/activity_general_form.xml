@@ -140,29 +140,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/lvapno_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_title"
-                android:layout_marginTop="@dimen/_5dp"
-                android:hint="@string/lvapno_text"
-                android:padding="@dimen/_10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
-
-            <EditText
-                android:id="@+id/lvapno"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_title"
-                android:layout_marginTop="@dimen/_5dp"
-                android:background="@drawable/child_back_ground"
-                android:hint="@string/input_value"
-                android:inputType="text"
-                android:padding="@dimen/_15dp"
-                android:textColor="@color/black" />
-
-            <TextView
                 android:id="@+id/empno_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -226,51 +203,6 @@
 <!--                android:textColor="@color/black" />-->
 
         </LinearLayout>
-
-
-
-            <TextView
-                android:id="@+id/appr_mgr_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_title"
-                android:layout_marginTop="@dimen/_5dp"
-                android:hint="@string/appr_mgr_text"
-                android:padding="@dimen/_10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <EditText
-                    android:id="@+id/empno"
-                    android:layout_width="@dimen/_100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_title"
-                    android:layout_marginTop="@dimen/_5dp"
-                    android:background="@drawable/child_back_ground"
-                    android:hint="@string/input_value"
-                    android:inputType="number"
-                    android:padding="@dimen/_15dp"
-                    android:textColor="@color/black" />
-                <EditText
-                    android:id="@+id/empno"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_title"
-                    android:layout_marginTop="@dimen/_5dp"
-                    android:layout_marginLeft="@dimen/_5dp"
-                    android:background="@drawable/child_back_ground"
-                    android:hint="@string/input_value"
-                    android:inputType="number"
-                    android:padding="@dimen/_15dp"
-                    android:textColor="@color/black" />
-
-
-
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/leave_appl_date_text"
@@ -382,7 +314,7 @@
 
                     <TextView
                         android:id="@+id/frmdt_text"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_200dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txt_title"
                         android:layout_marginTop="@dimen/_5dp"
@@ -392,16 +324,18 @@
                         android:textColorHint="@color/black" />
 
                     <EditText
-                        android:id="@+id/appr_mgr"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/edt_frmdatetime"
+                        android:layout_width="@dimen/_200dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txt_title"
-                        android:layout_marginTop="@dimen/_5dp"
                         android:background="@drawable/child_back_ground"
-                        android:hint="@string/input_value"
-                        android:inputType="date"
-                        android:padding="@dimen/_15dp"
-                        android:textColor="@color/black" />
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:gravity="start"
+                        android:inputType="none"
+                        android:maxLines="1"
+                        android:padding="15dp"
+                        android:text="@string/date_time"
+                         />
 
 
                 </LinearLayout>
@@ -413,7 +347,7 @@
 
                     <TextView
                         android:id="@+id/frmdt_text"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_80dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txt_title"
                         android:layout_marginTop="@dimen/_5dp"
@@ -423,11 +357,12 @@
                         android:textColorHint="@color/black" />
 
                     <RadioButton
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_80dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/_5dp"
                         android:hint="FN"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:id="@+id/radio_ffn"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -437,7 +372,7 @@
 
                     <TextView
                         android:id="@+id/frmdt_text"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_80dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txt_title"
                         android:layout_marginTop="@dimen/_5dp"
@@ -447,44 +382,15 @@
                         android:textColorHint="@color/black" />
 
                     <RadioButton
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/_5dp"
                         android:hint="AN"
-                        android:inputType="number"
-
+                        android:id="@+id/radio_fan"
                         android:textColor="@color/black" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/frmdt_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/txt_title"
-                        android:layout_marginTop="@dimen/_5dp"
-                        android:hint="From Session"
-                        android:padding="@dimen/_10dp"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black" />
-
-                    <EditText
-                        android:id="@+id/appr_mgr"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/txt_title"
-                        android:layout_marginLeft="@dimen/_5dp"
-                        android:layout_marginTop="@dimen/_5dp"
-                        android:background="@drawable/child_back_ground"
-                        android:hint="FN"
-                        android:inputType="number"
-                        android:padding="@dimen/_15dp"
-                        android:textColor="@color/black" />
-                </LinearLayout>
 
 
             </LinearLayout>
@@ -501,7 +407,7 @@
 
                     <TextView
                         android:id="@+id/frmdt_text"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_200dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txt_title"
                         android:layout_marginTop="@dimen/_5dp"
@@ -511,16 +417,17 @@
                         android:textColorHint="@color/black" />
 
                     <EditText
-                        android:id="@+id/appr_mgr"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/todt_datetime"
+                        android:layout_width="@dimen/_200dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txt_title"
-                        android:layout_marginTop="@dimen/_5dp"
                         android:background="@drawable/child_back_ground"
-                        android:hint="@string/input_value"
-                        android:inputType="date"
-                        android:padding="@dimen/_15dp"
-                        android:textColor="@color/black" />
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:gravity="start"
+                        android:inputType="none"
+                        android:maxLines="1"
+                        android:padding="15dp"
+                        android:text="@string/date_time" />
 
 
                 </LinearLayout>
@@ -532,7 +439,7 @@
 
                     <TextView
                         android:id="@+id/frmdt_text"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_80dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txt_title"
                         android:layout_marginTop="@dimen/_5dp"
@@ -542,10 +449,11 @@
                         android:textColorHint="@color/black" />
 
                     <RadioButton
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_80dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/_5dp"
                         android:hint="FN"
+                        android:id="@+id/radio_afn"
                         android:textColor="@color/black" />
                 </LinearLayout>
 
@@ -556,7 +464,7 @@
 
                     <TextView
                         android:id="@+id/frmdt_text"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_80dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txt_title"
                         android:layout_marginTop="@dimen/_5dp"
@@ -566,42 +474,15 @@
                         android:textColorHint="@color/black" />
 
                     <RadioButton
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_80dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/_5dp"
                         android:hint="AN"
+                        android:id="@+id/radio_aan"
                         android:textColor="@color/black" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/frmdt_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/txt_title"
-                        android:layout_marginTop="@dimen/_5dp"
-                        android:hint="To Session"
-                        android:padding="@dimen/_10dp"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black" />
-
-                    <EditText
-                        android:id="@+id/appr_mgr"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/txt_title"
-                        android:layout_marginLeft="@dimen/_5dp"
-                        android:layout_marginTop="@dimen/_5dp"
-                        android:background="@drawable/child_back_ground"
-                        android:hint="FN"
-                        android:inputType="number"
-                        android:padding="@dimen/_15dp"
-                        android:textColor="@color/black" />
-                </LinearLayout>
 
 
             </LinearLayout>
@@ -620,12 +501,12 @@
             <EditText
                 android:id="@+id/appr_mgr"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/_150dp"
                 android:layout_below="@+id/txt_title"
                 android:layout_marginTop="@dimen/_5dp"
                 android:background="@drawable/child_back_ground"
                 android:hint="@string/input_value"
-                android:inputType="text"
+                android:inputType="text|textMultiLine"
                 android:padding="@dimen/_15dp"
                 android:textColor="@color/black" />
             <Button
