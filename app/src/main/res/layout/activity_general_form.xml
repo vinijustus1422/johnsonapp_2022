@@ -162,7 +162,7 @@
                 android:layout_marginTop="@dimen/_5dp"
                 android:background="@drawable/child_back_ground"
                 android:hint="Employee Number"
-                android:inputType="number"
+                android:inputType="text"
                 android:padding="@dimen/_15dp"
                 android:textColor="@color/black" />
 <!--            <EditText-->
@@ -216,14 +216,14 @@
                 android:textColorHint="@color/black" />
 
             <EditText
-                android:id="@+id/appr_mgr"
+                android:id="@+id/leavedate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_title"
                 android:layout_marginTop="@dimen/_5dp"
                 android:background="@drawable/child_back_ground"
                 android:hint="@string/input_value"
-                android:inputType="date"
+                android:inputType="none"
                 android:padding="@dimen/_15dp"
                 android:textColor="@color/black" />
 
@@ -290,14 +290,14 @@
                 android:textColorHint="@color/black" />
 
             <EditText
-                android:id="@+id/appr_mgr"
+                android:id="@+id/no_of_days"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_title"
                 android:layout_marginTop="@dimen/_5dp"
                 android:background="@drawable/child_back_ground"
                 android:hint="No.Of.Days"
-                android:inputType="number"
+                android:inputType="phone"
                 android:padding="@dimen/_15dp"
                 android:textColor="@color/black" />
 
@@ -499,16 +499,16 @@
                 android:textColorHint="@color/black" />
 
             <EditText
-                android:id="@+id/appr_mgr"
+                android:id="@+id/reason"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_150dp"
-                android:layout_below="@+id/txt_title"
-                android:layout_marginTop="@dimen/_5dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/child_back_ground"
-                android:hint="@string/input_value"
-                android:inputType="text|textMultiLine"
-                android:padding="@dimen/_15dp"
-                android:textColor="@color/black" />
+                android:gravity="start"
+                android:hint="Reason"
+                android:inputType="text"
+                android:padding="15dp"
+                />
             <Button
                 android:id="@+id/btn_success"
                 android:layout_width="wrap_content"

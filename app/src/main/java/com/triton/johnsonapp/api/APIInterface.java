@@ -10,8 +10,10 @@ import com.triton.johnsonapp.requestpojo.FetchRecordByUserIDRequest;
 import com.triton.johnsonapp.requestpojo.FormDataStoreRequest;
 import com.triton.johnsonapp.requestpojo.FormFiveBasedStroeDataRequest;
 import com.triton.johnsonapp.requestpojo.FormFiveDataRequest;
+import com.triton.johnsonapp.requestpojo.GetFetchAttendanceResponse;
 import com.triton.johnsonapp.requestpojo.GetFieldListRequest;
 import com.triton.johnsonapp.requestpojo.GetJobDetailByActivityRequest;
+import com.triton.johnsonapp.requestpojo.GetLeaveFieldListResponse;
 import com.triton.johnsonapp.requestpojo.GroupDetailManagementRequest;
 import com.triton.johnsonapp.requestpojo.ImageBasedStroeDataRequest;
 import com.triton.johnsonapp.requestpojo.JobFetchAddressRequest;
@@ -23,6 +25,7 @@ import com.triton.johnsonapp.requestpojo.RowBasedStroeDataRequest;
 import com.triton.johnsonapp.requestpojo.StartWorkRequest;
 import com.triton.johnsonapp.requestpojo.StopJobRequest;
 import com.triton.johnsonapp.requestpojo.SubGroupDetailManagementRequest;
+import com.triton.johnsonapp.requestpojo.SubordActivityFormReqest;
 import com.triton.johnsonapp.responsepojo.ActivityGetListNumberResponse;
 import com.triton.johnsonapp.responsepojo.ActivityListManagementResponse;
 import com.triton.johnsonapp.responsepojo.CheckDataStoreResponse;
@@ -30,14 +33,17 @@ import com.triton.johnsonapp.responsepojo.FetchRecordByUserIDResponse;
 import com.triton.johnsonapp.responsepojo.FileUploadResponse;
 import com.triton.johnsonapp.responsepojo.FormDataStoreResponse;
 import com.triton.johnsonapp.responsepojo.FormFiveDataResponse;
+import com.triton.johnsonapp.responsepojo.GetFetchAttendanceListResponse;
 import com.triton.johnsonapp.responsepojo.GetFieldListResponse;
 import com.triton.johnsonapp.responsepojo.GetJobDetailByActivityResponse;
 import com.triton.johnsonapp.responsepojo.GetServiceListResponse;
 import com.triton.johnsonapp.responsepojo.GroupDetailManagementResponse;
 import com.triton.johnsonapp.responsepojo.JobFetchAddressResponse;
 import com.triton.johnsonapp.responsepojo.JobNoManagementResponse;
+import com.triton.johnsonapp.responsepojo.LeaveFormDataStoreResponse;
 import com.triton.johnsonapp.responsepojo.LoginResponse;
 import com.triton.johnsonapp.responsepojo.SubGroupDetailManagementResponse;
+import com.triton.johnsonapp.responsepojo.SubordActivityFormResponse;
 import com.triton.johnsonapp.responsepojo.SuccessResponse;
 import com.triton.johnsonapp.responsepojo.ViewInfoResponse;
 
@@ -193,8 +199,15 @@ public interface APIInterface {
     @POST("job_no_managment/get_jobdetail_by_activtiy")
     Call<GetJobDetailByActivityResponse> getJobDetailByActivityResponseCall(@Header("Content-Type") String type, @Body GetJobDetailByActivityRequest getJobDetailByActivityRequest);
 
+    /*Leave Request Api*/
+    @POST("activity/leave_request")
+    Call<LeaveFormDataStoreResponse>  leaveRequestCall(@Header("Content-Type") String type, @Body GetLeaveFieldListResponse getLeaveFieldListResponse);
 
+    /*Subord Attendance List*/
+    @POST("activity/fetch_attendance_list")
+    Call<GetFetchAttendanceListResponse> getfetchattendanceListResponseCall(@Header("Content-Type") String type, @Body GetFetchAttendanceResponse getFetchAttendanceResponse);
 
-
-
+    /*Subord Attendance POST*/
+    @POST("activity/submitt_sub_attendance")
+    Call<SubordActivityFormResponse> postsuboradattendenceRequestCall(@Header("Content-Type") String type, @Body SubordActivityFormReqest subordActivityFormReqest);
 }

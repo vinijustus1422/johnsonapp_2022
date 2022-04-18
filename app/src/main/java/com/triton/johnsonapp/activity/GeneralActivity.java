@@ -81,13 +81,9 @@ public class GeneralActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GeneralActivity.this, InputValueFormListActivity.class);
-                intent.putExtra("activity_id",activity_id);
-                intent.putExtra("job_id",job_id);
-                intent.putExtra("group_id",group_id);
-                intent.putExtra("group_detail_name","gf");
+                intent.putExtra("job_id","General");
+                intent.putExtra("group_id","6246a3b824aa6055f7f263e8");
                 intent.putExtra("subgroup_id","");
-                intent.putExtra("status",status);
-                intent.putExtra("fromactivity",fromactivity);
                 startActivity(intent);
             }
         });
