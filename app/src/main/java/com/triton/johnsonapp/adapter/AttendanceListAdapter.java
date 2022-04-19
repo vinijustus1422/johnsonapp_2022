@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -84,15 +85,22 @@ public class AttendanceListAdapter extends RecyclerView.Adapter<AttendanceListAd
             }
         });
 
-        holder.empPER_IN_HR.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                Log.w(TAG," s---> : "+parent.getItemAtPosition(pos).toString());
-                //getSpinnerListener.getSpinnerListener(holder.empFN,parent.getItemAtPosition(pos).toString());
-                subordActivityFormReqest.setPER_IN_HR(parent.getItemAtPosition(pos).toString());
-
+        holder.empPER_IN_HR.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-            public void onNothingSelected(AdapterView<?> parent) {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.w(TAG," s---> : "+s.toString());
+                subordActivityFormReqest.setPER_IN_HR(s.toString());
+
+                // getRemarksListner.getRemarksListner(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
 
             }
@@ -144,7 +152,8 @@ public class AttendanceListAdapter extends RecyclerView.Adapter<AttendanceListAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView empId, empName,empREASON;
-        private Spinner empFN,empAN,empPER_IN_HR,empPER_OFF;
+        private EditText empPER_IN_HR;
+        private Spinner empFN,empAN,empPER_OFF;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -161,7 +170,6 @@ public class AttendanceListAdapter extends RecyclerView.Adapter<AttendanceListAd
             empAN.setAdapter(adapterfore);
             String [] peroff = {"Select Value","P","L"};
             ArrayAdapter<String> adapterperoff = new ArrayAdapter<String>(context.getApplicationContext(), android.R.layout.simple_spinner_item, peroff);
-            empPER_IN_HR.setAdapter(adapterperoff);
             empPER_OFF.setAdapter(adapterperoff);
 
 

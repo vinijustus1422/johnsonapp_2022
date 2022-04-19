@@ -208,12 +208,8 @@ public class SubordActivityForm extends AppCompatActivity {
                     {
                         dataBeanList = response.body().getData();
                         Log.w(TAG, "dataBeanList Size : " + dataBeanList.size());
-                        for(int i = 0;i<dataBeanList.size();i++)
-                        {
-
-                        }
-                            rv_rowdatalist.setLayoutManager(new LinearLayoutManager(SubordActivityForm.this));
-                            rv_rowdatalist.setAdapter(new AttendanceListAdapter(SubordActivityForm.this,dataBeanList,Data));
+                        rv_rowdatalist.setLayoutManager(new LinearLayoutManager(SubordActivityForm.this));
+                        rv_rowdatalist.setAdapter(new AttendanceListAdapter(SubordActivityForm.this,dataBeanList,Data));
 
 
 //

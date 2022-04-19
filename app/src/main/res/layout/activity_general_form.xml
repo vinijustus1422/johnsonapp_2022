@@ -162,45 +162,10 @@
                 android:layout_marginTop="@dimen/_5dp"
                 android:background="@drawable/child_back_ground"
                 android:hint="Employee Number"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:padding="@dimen/_15dp"
                 android:textColor="@color/black" />
-<!--            <EditText-->
-<!--                android:id="@+id/empno"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/txt_title"-->
-<!--                android:layout_marginTop="@dimen/_5dp"-->
-<!--                android:layout_marginLeft="@dimen/_5dp"-->
-<!--                android:background="@drawable/child_back_ground"-->
-<!--                android:hint="@string/input_value"-->
-<!--                android:inputType="number"-->
-<!--                android:padding="@dimen/_15dp"-->
-<!--                android:textColor="@color/black" />-->
-<!--            <EditText-->
-<!--                android:id="@+id/empno"-->
-<!--                android:layout_width="@dimen/_50dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/txt_title"-->
-<!--                android:layout_marginTop="@dimen/_5dp"-->
-<!--                android:layout_marginLeft="@dimen/_5dp"-->
-<!--                android:background="@drawable/child_back_ground"-->
-<!--                android:hint="@string/input_value"-->
-<!--                android:inputType="number"-->
-<!--                android:padding="@dimen/_15dp"-->
-<!--                android:textColor="@color/black" />-->
-<!--            <EditText-->
-<!--                android:id="@+id/empno"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/txt_title"-->
-<!--                android:layout_marginTop="@dimen/_5dp"-->
-<!--                android:layout_marginLeft="@dimen/_5dp"-->
-<!--                android:background="@drawable/child_back_ground"-->
-<!--                android:hint="@string/input_value"-->
-<!--                android:inputType="date"-->
-<!--                android:padding="@dimen/_15dp"-->
-<!--                android:textColor="@color/black" />-->
+
 
         </LinearLayout>
 
@@ -222,8 +187,9 @@
                 android:layout_below="@+id/txt_title"
                 android:layout_marginTop="@dimen/_5dp"
                 android:background="@drawable/child_back_ground"
-                android:hint="@string/input_value"
+                android:hint="Leave Application Date"
                 android:inputType="none"
+                android:focusable="false"
                 android:padding="@dimen/_15dp"
                 android:textColor="@color/black" />
 

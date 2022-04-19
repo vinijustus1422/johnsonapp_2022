@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -65,6 +67,7 @@ public class GeneralActivityForm extends AppCompatActivity  {
     private String source = "JLSMART";
     private String TAG = "GeneralActivityForm";
     private Dialog alertDialog;
+    String selectedvalue;
     String networkStatus = "",message;
     boolean isAllFieldsChecked = false;
 
@@ -141,6 +144,7 @@ public class GeneralActivityForm extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 boolean checked = ((RadioButton) view).isChecked();
+
                 switch(view.getId()) {
                     case R.id.radio_ffn:
                         if (checked)
@@ -221,7 +225,7 @@ public class GeneralActivityForm extends AppCompatActivity  {
 
                         radio_afn.setChecked(true);
                         radio_aan.setChecked(false);
-
+                        Toast.makeText(getBaseContext(), "sdfgfsdg"+radio_afn.getText(), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.radio_aan:
                         if (checked)
@@ -251,6 +255,41 @@ public class GeneralActivityForm extends AppCompatActivity  {
                     saveleaveapplication();
                 }
 
+
+            }
+        });
+
+        no_of_days.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String noofdays = charSequence.toString();
+                String doubleAsString = String.valueOf(noofdays);
+                if(!noofdays.equals("")) {
+                    days = Float.parseFloat(noofdays);
+                }
+                else{
+                    Toast.makeText(GeneralActivityForm.this,"Please give proper number value in days !!",Toast.LENGTH_LONG).show();
+                }
+                int datevalue = Math.round(days);
+                Log.w(TAG,"Radio Value11111----"+(days-datevalue));
+                if(((days-datevalue)+"").equals("-0.5") || ((days-datevalue)+"").equals("-0.0"))
+                {
+                    Log.w(TAG,"Radio Value1111122----"+(days-datevalue));
+                }else
+                {
+
+                    Toast.makeText(GeneralActivityForm.this,"Please Proper No.of.days It's only accept(0.5) !!",Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
 
             }
         });
@@ -328,17 +367,42 @@ public class GeneralActivityForm extends AppCompatActivity  {
 
     private GetLeaveFieldListResponse checkLeaveRequest() {
         GetLeaveFieldListResponse checkLeaveRequest = new GetLeaveFieldListResponse();
+
         checkLeaveRequest.setPA_LAH_EMPNO(empno.getText().toString());
         checkLeaveRequest.setPA_LAH_LVCODE(leavecode_drp.getSelectedItem().toString());
         checkLeaveRequest.setPA_LAH_NOFDYS(no_of_days.getText().toString());
         checkLeaveRequest.setPA_LAH_FRMDT(dateFRMView.getText().toString());
-        checkLeaveRequest.setPA_LAH_FRMSES(radio_ffn.getText().toString());
+        if(radio_ffn.isChecked())
+        {
+            selectedvalue = "FN";
+            Log.w(TAG,"RADIO VALUE"+selectedvalue);
+            checkLeaveRequest.setPA_LAH_FRMSES(selectedvalue);
+        }else
+        {
+            selectedvalue = "AN";
+            Log.w(TAG,"RADIO VALUE"+selectedvalue);
+            checkLeaveRequest.setPA_LAH_FRMSES(selectedvalue);
+
+        }
+
         checkLeaveRequest.setPA_LAH_TODT(dateTOView.getText().toString());
-        checkLeaveRequest.setPA_LAH_TOSES(radio_afn.getText().toString());
+        if(radio_afn.isChecked())
+        {
+            selectedvalue = "FN";
+            Log.w(TAG,"RADIO VALUE"+selectedvalue);
+            checkLeaveRequest.setPA_LAH_TOSES(selectedvalue);
+        }else
+        {
+            selectedvalue = "AN";
+            Log.w(TAG,"RADIO VALUE"+selectedvalue);
+            checkLeaveRequest.setPA_LAH_TOSES(selectedvalue);
+
+        }
         checkLeaveRequest.setPA_LAH_REASON(reason.getText().toString());
         checkLeaveRequest.setPA_LAH_STATUS(status);
         checkLeaveRequest.setPA_LAH_ENTRYBY(username);
         checkLeaveRequest.setPA_LAH_SOURCE(source);
+        Log.w(TAG, "data_store_management/create_Request " + new Gson().toJson(checkLeaveRequest));
         return checkLeaveRequest;
 
     }
@@ -370,7 +434,7 @@ public class GeneralActivityForm extends AppCompatActivity  {
                     // arg3 = day
                     showDate(arg1, arg2+1, arg3);
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
                     final Calendar calender = Calendar.getInstance();
                     calender.set(Calendar.YEAR,arg1);
                     calender.set(Calendar.MONTH,arg2);
@@ -413,7 +477,7 @@ public class GeneralActivityForm extends AppCompatActivity  {
             Toast.makeText(GeneralActivityForm.this,"Please give proper number value in days !!",Toast.LENGTH_LONG).show();
         }
         int datevalue = Math.round(days);
-
+        Log.w(TAG,"Radio Value"+(days-datevalue));
         if(((days-datevalue)+"").equals("-0.5"))
         {
             if(radio_fan.isChecked())
@@ -451,7 +515,7 @@ public class GeneralActivityForm extends AppCompatActivity  {
         submittedSuccessfulalertdialog.setContentView(R.layout.alert_success);
         Button btn_goback = submittedSuccessfulalertdialog.findViewById(R.id.btn_goback);
         TextView txt_success_msg = submittedSuccessfulalertdialog.findViewById(R.id.txt_success_msg);
-        txt_success_msg.setText("All data submitted successfully.");
+        txt_success_msg.setText("Leave request submitted successfully");
         btn_goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
