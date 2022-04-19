@@ -279,7 +279,7 @@ public class GeneralActivityForm extends AppCompatActivity  {
                 Log.w(TAG,"Radio Value11111----"+(days-datevalue));
                 if(((days-datevalue)+"").equals("-0.5") || ((days-datevalue)+"").equals("-0.0"))
                 {
-                    Log.w(TAG,"Radio Value1111122----"+(days-datevalue));
+                    Log.w(TAG,"Radio Value11111223----"+(days-datevalue));
                 }else
                 {
 
