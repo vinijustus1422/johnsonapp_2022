@@ -12,10 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.triton.johnsonapp.Forms.GeneralActivityForm;
 import com.triton.johnsonapp.R;
 import com.triton.johnsonapp.interfaces.GetSpinnerListener;
 import com.triton.johnsonapp.requestpojo.SubordActivityFormReqest;
@@ -30,7 +32,7 @@ public class AttendanceListAdapter extends RecyclerView.Adapter<AttendanceListAd
     Activity context;
     private List<GetFetchAttendanceListResponse.DataBean> dataBeanList;
     GetSpinnerListener getSpinnerListener;
-
+    float emphours = 0;
     public AttendanceListAdapter(Activity context, List<GetFetchAttendanceListResponse.DataBean> dataBeanList, List<SubordActivityFormReqest.DataBean> Data) {
         this.context = context;
         this.dataBeanList = dataBeanList;
@@ -94,9 +96,24 @@ public class AttendanceListAdapter extends RecyclerView.Adapter<AttendanceListAd
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.w(TAG," s---> : "+s.toString());
-                subordActivityFormReqest.setPER_IN_HR(s.toString());
+                String Hours = s.toString();
 
-                // getRemarksListner.getRemarksListner(s.toString());
+                emphours = Float.parseFloat(Hours);
+                int hoursvalue = Math.round(emphours);
+                Log.w(TAG,"Hours Value"+(emphours-hoursvalue));
+                if(((emphours-hoursvalue)+"").equals("-0.5"))
+                {
+                    subordActivityFormReqest.setPER_IN_HR(s.toString());
+                }else if(((emphours-hoursvalue)+"").equals("0.0"))
+                {
+                    subordActivityFormReqest.setPER_IN_HR(s.toString());
+                }else
+                {
+                   Toast.makeText(context.getApplicationContext(), "Please Proper Hours (1,1.5,2 etc.,)!!",Toast.LENGTH_LONG).show();
+                }
+
+
+
             }
 
             @Override
@@ -168,7 +185,7 @@ public class AttendanceListAdapter extends RecyclerView.Adapter<AttendanceListAd
             ArrayAdapter<String> adapterfore = new ArrayAdapter<String>(context.getApplicationContext(), android.R.layout.simple_spinner_item, forenoon);
             empFN.setAdapter(adapterfore);
             empAN.setAdapter(adapterfore);
-            String [] peroff = {"Select Value","P","L"};
+            String [] peroff = {"Select Value","P","O"};
             ArrayAdapter<String> adapterperoff = new ArrayAdapter<String>(context.getApplicationContext(), android.R.layout.simple_spinner_item, peroff);
             empPER_OFF.setAdapter(adapterperoff);
 

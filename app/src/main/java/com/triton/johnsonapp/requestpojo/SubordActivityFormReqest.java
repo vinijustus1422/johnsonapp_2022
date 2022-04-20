@@ -3,14 +3,32 @@ package com.triton.johnsonapp.requestpojo;
 import java.util.List;
 
 public class SubordActivityFormReqest {
-    /*  "EMPNO": "E16622",
-        "ENAME": "SHEIK MOHAMMED SHAHINSHA B",
-         "DATE": "12-10-1995",
-          "FN": "LL",
-         "AN": "",
-         "PER_IN_HR": "1",
-         "PER_OFF": "Office",
-          "REASON": "for Testing Process"*/
+//    {
+//        "user_phone":"9887766544321",
+//            "current_date":"23-10-2022",
+//            "Data":[
+//        {
+//            "EMPNO": "E16622",
+//                "ENAME": "SHEIK MOHAMMED SHAHINSHA B",
+//                "FN": "LL",
+//                "AN": "",
+//                "PER_IN_HR": "1",
+//                "PER_OFF": "Office",
+//                "REASON": "for Testing Process"
+//        },
+//        {
+//            "EMPNO": "E15511",
+//                "ENAME": "LOGANATHAN J",
+//                "FN": "",
+//                "AN": "PP",
+//                "PER_IN_HR": "",
+//                "PER_OFF": "",
+//                "REASON": "All Ok"
+//        }
+//    ]
+//    }
+    private String user_phone;
+    private String current_date;
     private List<DataBean> Data;
     private String EMPNO;
     private String ENAME;
@@ -20,6 +38,22 @@ public class SubordActivityFormReqest {
     private String PER_IN_HR;
     private String PER_OFF;
     private String REASON;
+
+    public String getUser_phone() {
+        return user_phone;
+    }
+
+    public void setUser_phone(String user_phone) {
+        this.user_phone = user_phone;
+    }
+
+    public String getCurrent_date() {
+        return current_date;
+    }
+
+    public void setCurrent_date(String current_date) {
+        this.current_date = current_date;
+    }
 
     public List<DataBean> getData() {
         return Data;

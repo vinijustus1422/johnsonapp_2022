@@ -57,7 +57,19 @@
                 android:textStyle="bold"
                 android:fontFamily="@font/sourcesanspro_regular"/>
 
-
+            <TextView
+                android:id="@+id/txt_success_msg1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Successful"
+                android:textColor="@color/johnson_green"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/sourcesanspro_regular"/>
 
 
             <LinearLayout
@@ -65,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_100dp"
                 android:layout_marginEnd="@dimen/_100dp"
+                android:layout_marginTop="@dimen/_20dp"
                 android:layout_marginBottom="@dimen/_30dp"
                 android:orientation="horizontal">
 

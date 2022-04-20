@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -70,6 +71,7 @@ public class GeneralActivityForm extends AppCompatActivity  {
     String selectedvalue;
     String networkStatus = "",message;
     boolean isAllFieldsChecked = false;
+    ImageView img_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +90,7 @@ public class GeneralActivityForm extends AppCompatActivity  {
         Log.w(TAG,"Username"+username);
 
         leavecode_drp = findViewById(R.id.leavecode_drp);
-        String [] leavecode = {"Select Value","P","L"};
+        String [] leavecode = {"Select Value","ACC","ANL","CLV","HOL","AHL","JUR"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, leavecode);
         leavecode_drp.setAdapter(adapter);
         empno = (EditText) findViewById(R.id.empno);
@@ -96,6 +98,7 @@ public class GeneralActivityForm extends AppCompatActivity  {
         dateTOView = (TextView) findViewById(R.id.todt_datetime);
         btn_success = (Button) findViewById(R.id.btn_success);
         no_of_days = (EditText) findViewById(R.id.no_of_days);
+        img_back = findViewById(R.id.img_back);
         calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -1);
 
@@ -239,15 +242,25 @@ public class GeneralActivityForm extends AppCompatActivity  {
             }
         });
 
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onBackPressed();
+            }
+        });
+
         btn_success.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(empno.getText().toString().equals("") || leavecode_drp.getSelectedItem().toString().equals("")
-                    || no_of_days.getText().toString().equals(""))
+                    || no_of_days.getText().toString().equals("") || dateFRMView.getText().toString().equals(""))
                 {
+                    //checkSession();
+
                     Toast toast = Toast.makeText(getApplicationContext(), "please enter all required data", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
-                    //toast.getView().setBackgroundTintList(ColorStateList.valueOf(R.color.warning));
+
                     toast.show();
 
                 }else
@@ -276,13 +289,17 @@ public class GeneralActivityForm extends AppCompatActivity  {
                     Toast.makeText(GeneralActivityForm.this,"Please give proper number value in days !!",Toast.LENGTH_LONG).show();
                 }
                 int datevalue = Math.round(days);
-                Log.w(TAG,"Radio Value11111----"+(days-datevalue));
-                if(((days-datevalue)+"").equals("-0.5") || ((days-datevalue)+"").equals("-0.0"))
+                Log.w(TAG,"Radio Value11111"+(days-datevalue));
+                if(((days-datevalue)+"").equals("-0.5"))
                 {
-                    Log.w(TAG,"Radio Value11111223----"+(days-datevalue));
-                }else
+                    Log.w(TAG,"Radio Value1111122----"+(days-datevalue));
+                }else if(((days-datevalue)+"").equals("0.0"))
                 {
 
+                    Log.w(TAG,"Radio Value11----"+(days-datevalue));
+                }else
+                {
+                    no_of_days.getText().clear();
                     Toast.makeText(GeneralActivityForm.this,"Please Proper No.of.days It's only accept(0.5) !!",Toast.LENGTH_LONG).show();
                 }
 
@@ -295,6 +312,16 @@ public class GeneralActivityForm extends AppCompatActivity  {
         });
 
     }
+
+//    private void checkSession() {
+//        if(radio_ffn.isChecked())
+//        {
+//            Toast.makeText(getApplicationContext(), "Please enter all required data", Toast.LENGTH_SHORT).show();
+//        }else
+//        {
+//            Toast.makeText(getApplicationContext(), "Please enter all required data", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     private boolean CheckAllFields() {
         if (empno.length() == 0) {
@@ -515,7 +542,9 @@ public class GeneralActivityForm extends AppCompatActivity  {
         submittedSuccessfulalertdialog.setContentView(R.layout.alert_success);
         Button btn_goback = submittedSuccessfulalertdialog.findViewById(R.id.btn_goback);
         TextView txt_success_msg = submittedSuccessfulalertdialog.findViewById(R.id.txt_success_msg);
-        txt_success_msg.setText("Leave request submitted successfully");
+        TextView txt_success_msg1 = submittedSuccessfulalertdialog.findViewById(R.id.txt_success_msg1);
+        txt_success_msg.setText("Leave request");
+        txt_success_msg1.setText("submitted successfully");
         btn_goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -536,6 +565,12 @@ public class GeneralActivityForm extends AppCompatActivity  {
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
 }

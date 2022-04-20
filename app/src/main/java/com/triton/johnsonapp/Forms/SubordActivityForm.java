@@ -54,10 +54,10 @@ public class SubordActivityForm extends AppCompatActivity {
     Dialog dialog;
     Dialog alertdialog;
     String Tag = "SuboardActivityForm";
-    String userid, username;
+    String userid, username,user_phone;
     private String userrole = "";
     private String TAG = "SubordActivityForm";
-    String phone_number;
+    String phone_number,thisDate;
     String networkStatus = "",message;
     List<GetFetchAttendanceListResponse.DataBean> dataBeanList;
 
@@ -77,13 +77,15 @@ public class SubordActivityForm extends AppCompatActivity {
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         userid = user.get(SessionManager.KEY_ID);
+        Log.w(TAG,"Userid"+userid);
         userrole = user.get(SessionManager.KEY_USERROLE);
         phone_number="9043456963";
 
         Log.w(TAG,"userrole  : "+userrole);
-
+        user_phone = user.get(SessionManager.KEY_USERID);
+        Log.w(TAG,"user_phone  : "+user_phone);
         username = user.get(SessionManager.KEY_USERNAME);
-        Log.w(TAG,"Username"+username);
+
 
 
         String [] Afternoon = {"Select Value","PP","LL"};
@@ -97,7 +99,7 @@ public class SubordActivityForm extends AppCompatActivity {
 
         SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
         Date todayDate = new Date();
-        String thisDate = currentDate.format(todayDate);
+        thisDate = currentDate.format(todayDate);
         TextView crnt_date = (TextView)findViewById(R.id.crnt_date);
         Log.w(Tag,thisDate);
         crnt_date.setText(thisDate);
@@ -172,7 +174,10 @@ public class SubordActivityForm extends AppCompatActivity {
     }
 
     private SubordActivityFormReqest postsuboradattendenceRequest() {
-        /*"EMPNO": "E16622",
+
+        /*"user_phone":"9887766544321",
+           "current_date":"23-10-2022",
+        "EMPNO": "E16622",
                 "ENAME": "SHEIK MOHAMMED SHAHINSHA B",
                 "DATE": "12-10-1995",
                 "FN": "LL",
@@ -181,6 +186,8 @@ public class SubordActivityForm extends AppCompatActivity {
                 "PER_OFF": "Office",
                 "REASON": "for Testing Process"*/
         SubordActivityFormReqest subordActivityFormReqest = new SubordActivityFormReqest();
+        subordActivityFormReqest.setUser_phone(user_phone);
+        subordActivityFormReqest.setCurrent_date(thisDate);
         subordActivityFormReqest.setData(Data);
         Log.w(TAG, "data_store_management/create_Request " + new Gson().toJson(subordActivityFormReqest));
         return subordActivityFormReqest;
@@ -243,7 +250,9 @@ public class SubordActivityForm extends AppCompatActivity {
         submittedSuccessfulalertdialog.setContentView(R.layout.alert_success);
         Button btn_goback = submittedSuccessfulalertdialog.findViewById(R.id.btn_goback);
         TextView txt_success_msg = submittedSuccessfulalertdialog.findViewById(R.id.txt_success_msg);
-        txt_success_msg.setText("All data submitted successfully.");
+        TextView txt_success_msg1 = submittedSuccessfulalertdialog.findViewById(R.id.txt_success_msg1);
+        txt_success_msg.setText("Subordinate Attendance");
+        txt_success_msg1.setText("Submitted Successfully");
         btn_goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -258,11 +267,5 @@ public class SubordActivityForm extends AppCompatActivity {
         });
         Objects.requireNonNull(submittedSuccessfulalertdialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         submittedSuccessfulalertdialog.show();
-
-
-
-
-
-
     }
 }
