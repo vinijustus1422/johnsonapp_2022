@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -66,7 +67,7 @@ public class SubordActivityForm extends AppCompatActivity {
     RecyclerView rv_rowdatalist;
     Dialog submittedSuccessfulalertdialog;
     Button btn_save;
-
+    ImageView img_back;
     private final List<SubordActivityFormReqest.DataBean> Data = new ArrayList<>();
 
     @Override
@@ -86,7 +87,7 @@ public class SubordActivityForm extends AppCompatActivity {
         Log.w(TAG,"user_phone  : "+user_phone);
         username = user.get(SessionManager.KEY_USERNAME);
 
-
+        img_back = findViewById(R.id.img_back);
 
         String [] Afternoon = {"Select Value","PP","LL"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Afternoon);
@@ -128,6 +129,14 @@ public class SubordActivityForm extends AppCompatActivity {
                 {
                     saveSubordAttendanceForm();
                 }
+            }
+        });
+
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onBackPressed();
             }
         });
 
@@ -238,7 +247,7 @@ public class SubordActivityForm extends AppCompatActivity {
     private GetFetchAttendanceResponse getFieldListRequest() {
         /*"phone_number": "9043456963"*/
         GetFetchAttendanceResponse getFetchAttendanceResponse = new GetFetchAttendanceResponse();
-        getFetchAttendanceResponse.setPhone_number(phone_number);
+        getFetchAttendanceResponse.setPhone_number(user_phone);
 
         return getFetchAttendanceResponse;
     }

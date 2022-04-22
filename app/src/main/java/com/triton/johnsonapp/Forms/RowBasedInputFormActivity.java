@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -140,6 +142,8 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
     private int new_count;
     private int pause_count;
 
+    Spinner drp_value;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -205,6 +209,11 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
 
             }
         });
+
+        drp_value = findViewById(R.id.spr_dropdown);
+        String [] leavecode = {"Select Value","ACC","ANL"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, leavecode);
+        drp_value.setAdapter(adapter);
 
         img_add.setOnClickListener(new View.OnClickListener() {
             @SuppressLint({"NewApi", "ResourceAsColor"})

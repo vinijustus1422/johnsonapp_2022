@@ -598,7 +598,7 @@ public class FieldListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHol
 
                     digitalSignatureServerUrlImagePath = currentItem.getField_value();
 
-                    Log.w(TAG, "digitalSignatureServerUrlImagePath " + digitalSignatureServerUrlImagePath);
+                    Log.w(TAG, "digitalSignatureServerUrlImagePath---- " + digitalSignatureServerUrlImagePath);
 
                     holder.ivdigitalsignature.setVisibility(View.VISIBLE);
                     if (digitalSignatureServerUrlImagePath != null && !digitalSignatureServerUrlImagePath.isEmpty()) {

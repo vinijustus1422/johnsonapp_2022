@@ -13,8 +13,11 @@ import com.triton.johnsonapp.Forms.InputValueFormListActivity;
 import com.triton.johnsonapp.Forms.SubordActivityForm;
 import com.triton.johnsonapp.R;
 import com.triton.johnsonapp.session.SessionManager;
+import com.triton.johnsonapp.utils.ConnectionDetector;
 
 import java.util.HashMap;
+
+import es.dmoral.toasty.Toasty;
 
 public class GeneralActivity extends AppCompatActivity {
 
@@ -61,6 +64,13 @@ public class GeneralActivity extends AppCompatActivity {
         cv_root = (CardView) findViewById(R.id.cv_root);
         cv_root1 = (CardView) findViewById(R.id.cv_root1);
         cv_root2 = (CardView) findViewById(R.id.cv_root2);
+
+        networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
+        if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
+
+            Toasty.warning(getApplicationContext(),"No Internet",Toasty.LENGTH_LONG).show();
+
+        }
         cv_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

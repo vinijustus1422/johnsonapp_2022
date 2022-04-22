@@ -197,7 +197,15 @@ public class InputValueFormListActivity extends AppCompatActivity implements Get
 
     public String digitalSignatureServerUrlImagePath;
 
-    String string_value, message, service_id, activity_id, job_id, group_id,status,job_detail_no;
+    String string_value;
+    String message;
+    String service_id;
+    String activity_id;
+    String job_id;
+    String group_id;
+    String status;
+    String job_detail_no;
+
     String subgroup_id = "";
 
     int string_value_pos;
@@ -219,7 +227,7 @@ public class InputValueFormListActivity extends AppCompatActivity implements Get
     private String UKEY_DESC;
     private int new_count;
     private int pause_count;
-
+    private int form_type;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -236,7 +244,7 @@ public class InputValueFormListActivity extends AppCompatActivity implements Get
             Log.w(TAG,"Group"+group_id);
             activity_id = extras.getString("activity_id");
             job_id = extras.getString("job_id");
-            Log.w(TAG,"job_id"+job_id);
+            Log.w(TAG,"job_id---"+job_id);
             job_detail_no = extras.getString("job_detail_no");
             status = extras.getString("status");
             subgroup_id = extras.getString("subgroup_id");
@@ -246,8 +254,8 @@ public class InputValueFormListActivity extends AppCompatActivity implements Get
             UKEY_DESC = extras.getString("UKEY_DESC");
             new_count = extras.getInt("new_count");
             pause_count = extras.getInt("pause_count");
-
-
+            form_type = extras.getInt("form_type");
+            Log.w(TAG,"form_type----"+form_type);
 
             String group_detail_name = extras.getString("group_detail_name");
             String  sub_group_detail_name = extras.getString("sub_group_detail_name");
@@ -761,7 +769,7 @@ public class InputValueFormListActivity extends AppCompatActivity implements Get
         //Creating an object of our api interface
         APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         Call<GetFieldListResponse> call = apiInterface.joinInspectionGetFieldListResponseCall(RestUtils.getContentType(), getFieldListRequest());
-        Log.w(TAG, "url  :%s" + call.request().url().toString());
+        Log.w(TAG, "url join :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<GetFieldListResponse>() {
             @SuppressLint({"LogNotTimber", "SetTextI18n"})
@@ -1425,17 +1433,24 @@ public class InputValueFormListActivity extends AppCompatActivity implements Get
                         digitalSignatureServerUrlImagePath = response.body().getData();
                         Log.w(TAG, "digitalSignatureServerUrlImagePath " + digitalSignatureServerUrlImagePath);
                         ivdigitalsignature.setVisibility(View.VISIBLE);
+                        //ivdigitalsignature.setImageDrawable(null);
                         if (digitalSignatureServerUrlImagePath != null && !digitalSignatureServerUrlImagePath.isEmpty()) {
                             dataBeanList.get(position).setField_value(digitalSignatureServerUrlImagePath);
                             Log.w(TAG, "digitalSignatureServerUrlImagePath pos--->" + position);
 
                             Log.w(TAG, "digitalSignatureServerUrlImagePath--->" + digitalSignatureServerUrlImagePath);
 
-                            Glide
+                           /* Glide
                                     .with(getApplicationContext())
                                     .load(digitalSignatureServerUrlImagePath)
                                     .apply(new RequestOptions().override(600, 200))
                                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .into(ivdigitalsignature);*/
+                            Glide.with(getApplicationContext())
+                                    .load(digitalSignatureServerUrlImagePath)
+                                    .override(600, 200)
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .skipMemoryCache(true)
                                     .into(ivdigitalsignature);
 
 
@@ -1716,20 +1731,25 @@ public class InputValueFormListActivity extends AppCompatActivity implements Get
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if(fromactivity != null && fromactivity.equalsIgnoreCase("ABCustomerDetailsActivity")){
+                            Log.w(TAG,"Formtype--"+fromactivity);
                             Intent intent = new Intent(InputValueFormListActivity.this, ActivityJobListActivity.class);
-                            intent.putExtra("activity_id", activity_id);
+                            //intent.putExtra("activity_id", activity_id);
                             intent.putExtra("job_id", job_id);
                             intent.putExtra("job_detail_no", job_detail_no);
+                            intent.putExtra("activity_id",group_id);
                             intent.putExtra("status", status);
+                            intent.putExtra("fromactivity", fromactivity);
                             intent.putExtra("UKEY", UKEY);
                             intent.putExtra("UKEY_DESC", UKEY_DESC);
                             intent.putExtra("new_count", new_count);
                             intent.putExtra("pause_count", pause_count);
+                            intent.putExtra("form_type",form_type);
                             startActivity(intent);
                             overridePendingTransition(R.anim.new_right, R.anim.new_left);
                             finish();
                         }
                         else if(fromactivity != null && fromactivity.equalsIgnoreCase("SubGroupListActivity")){
+                            Log.w(TAG,"Formtype--"+fromactivity);
                             Intent intent = new Intent(InputValueFormListActivity.this, SubGroupListActivity.class);
                             intent.putExtra("activity_id",activity_id);
                             intent.putExtra("job_id",job_id);
@@ -1745,6 +1765,7 @@ public class InputValueFormListActivity extends AppCompatActivity implements Get
                             overridePendingTransition(R.anim.new_right, R.anim.new_left);
                             finish();
                         }else {
+                            Log.w(TAG,"Formtype--"+fromactivity);
                             Intent intent = new Intent(InputValueFormListActivity.this, GroupListActivity.class);
                             intent.putExtra("activity_id", activity_id);
                             intent.putExtra("job_id", job_id);

@@ -1,5 +1,6 @@
 package com.triton.johnsonapp.api;
 
+import com.triton.johnsonapp.activity.GetFetchLatestVersionResponse;
 import com.triton.johnsonapp.requestpojo.ActivityGetListNumberRequest;
 import com.triton.johnsonapp.requestpojo.ActivityListManagementRequest;
 import com.triton.johnsonapp.requestpojo.AttendanceCreateRequest;
@@ -14,6 +15,7 @@ import com.triton.johnsonapp.requestpojo.GetFetchAttendanceResponse;
 import com.triton.johnsonapp.requestpojo.GetFieldListRequest;
 import com.triton.johnsonapp.requestpojo.GetJobDetailByActivityRequest;
 import com.triton.johnsonapp.requestpojo.GetLeaveFieldListResponse;
+import com.triton.johnsonapp.requestpojo.Getlatestversionrequest;
 import com.triton.johnsonapp.requestpojo.GroupDetailManagementRequest;
 import com.triton.johnsonapp.requestpojo.ImageBasedStroeDataRequest;
 import com.triton.johnsonapp.requestpojo.JobFetchAddressRequest;
@@ -210,4 +212,8 @@ public interface APIInterface {
     /*Subord Attendance POST*/
     @POST("activity/submitt_sub_attendance")
     Call<SubordActivityFormResponse> postsuboradattendenceRequestCall(@Header("Content-Type") String type, @Body SubordActivityFormReqest subordActivityFormReqest);
+
+    /*Version Check*/
+    @GET("activity/getlatest_version")
+    Call<GetFetchLatestVersionResponse> getlatestversionrequestcall();
 }

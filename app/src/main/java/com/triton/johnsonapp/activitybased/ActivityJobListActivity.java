@@ -160,7 +160,7 @@ public class ActivityJobListActivity extends AppCompatActivity implements OnMapR
             form_type = extras.getInt("form_type");
             new_count = extras.getInt("new_count");
             pause_count = extras.getInt("pause_count");
-
+            Log.w(TAG,"formType-----"+form_type);
             Log.w(TAG,"activity_id -->"+activity_id+" status : "+status);
 
             if(status != null && status.equalsIgnoreCase("New")){

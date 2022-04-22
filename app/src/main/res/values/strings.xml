@@ -1,5 +1,5 @@
 <resources>
-    <string name="version">Version 30.03.22.1</string>
+    <string name="version">21.04.2022</string>
     <string name="app_name">JLsmart</string>
     <string name="app_name_with">Johnson App Login</string>
     <string name="app_name_with_login">Johnson App Login</string>
@@ -11,7 +11,7 @@
     <string name="err_msg_type_of_stationname">Select the station name</string>
     <string name="err_msg_type_of_jobno">Select the job no</string>
     <string name="err_msg_type_of_faulttype">Select the fault type</string>
-
+    <string name="drp_value">Drop Down</string>
 
     <string name="font_name_fontawesome">fontawesome</string>
     <string name="font_name_source_sans_pro">SourceSansPro</string>
@@ -122,6 +122,7 @@
     <string name="generaldetail_leaveappln">Leave Application</string>
     <string name="generaldetail_subord">Subordinate Attendance</string>
     <string name="crntdate">08-04-2022</string>
+    <string name="phone_number">Phone Number</string>
 
 
     <style name="table_header" parent="@android:style/TextAppearance.Small">
