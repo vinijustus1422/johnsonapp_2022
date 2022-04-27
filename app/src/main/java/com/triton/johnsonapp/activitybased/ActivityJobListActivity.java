@@ -57,6 +57,7 @@ import com.triton.johnsonapp.api.RetrofitClient;
 import com.triton.johnsonapp.requestpojo.ActivityListManagementRequest;
 import com.triton.johnsonapp.requestpojo.AttendanceLogoutRequest;
 import com.triton.johnsonapp.requestpojo.GetJobDetailByActivityRequest;
+import com.triton.johnsonapp.responsepojo.ActivityGetListNumberResponse;
 import com.triton.johnsonapp.responsepojo.GetJobDetailByActivityResponse;
 import com.triton.johnsonapp.responsepojo.JobNoManagementResponse;
 import com.triton.johnsonapp.responsepojo.SuccessResponse;
@@ -66,6 +67,7 @@ import com.triton.johnsonapp.utils.ConnectionDetector;
 import com.triton.johnsonapp.utils.RestUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -114,6 +116,10 @@ public class ActivityJobListActivity extends AppCompatActivity implements OnMapR
     @BindView(R.id.edt_search)
     EditText edt_search;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_clearsearch)
+    ImageView img_clearsearch;
+
     private String search_string ="";
     SessionManager session;
 
@@ -134,7 +140,8 @@ public class ActivityJobListActivity extends AppCompatActivity implements OnMapR
     private String SMU_DWNFLAG = "";
     private int  new_count;
     private int  pause_count;
-
+    List<GetJobDetailByActivityResponse.DataBean> dataBeanList;
+    ABJobDetailListAdapter abJobDetailListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,12 +182,25 @@ public class ActivityJobListActivity extends AppCompatActivity implements OnMapR
         edt_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    search_string = textView.getText().toString();
-                    getJobDetailByActivityResponseCall();
-                    return true;
-                }
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    search_string = textView.getText().toString();
+//                    getJobDetailByActivityResponseCall();
+//                    return true;
+//                }
+                img_clearsearch.setVisibility(View.VISIBLE);
+                String Searchvalue = edt_search.getText().toString();
+                Log.w(TAG,"Search Value---"+Searchvalue);
+                filter(Searchvalue);
                 return false;
+            }
+        });
+
+        img_clearsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edt_search.setText("");
+                getJobDetailByActivityResponseCall();
+                img_clearsearch.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -229,6 +249,28 @@ public class ActivityJobListActivity extends AppCompatActivity implements OnMapR
 
     }
 
+    private void filter(String s) {
+        List<GetJobDetailByActivityResponse.DataBean> filteredlist = new ArrayList<>();
+        for(GetJobDetailByActivityResponse.DataBean item : dataBeanList)
+        {
+            if(item.getJob_detail_no().toLowerCase().contains(s.toLowerCase()))
+            {
+                Log.w(TAG,"filter----"+item.getJob_detail_no().toLowerCase().contains(s.toLowerCase()));
+                filteredlist.add(item);
+            }
+        }
+        if(filteredlist.isEmpty())
+        {
+            Toast.makeText(this,"No Data Found ... ",Toast.LENGTH_SHORT).show();
+            rv_jobdetaillist.setVisibility(View.GONE);
+            txt_no_records.setVisibility(View.VISIBLE);
+            txt_no_records.setText("No Jobs Available");
+        }else
+        {
+            abJobDetailListAdapter.filterList(filteredlist);
+        }
+    }
+
 
     // default back button action
     public void onBackPressed() {
@@ -271,7 +313,7 @@ public class ActivityJobListActivity extends AppCompatActivity implements OnMapR
                         if(response.body().getData() != null){
 
                             dialog.dismiss();
-                            List<GetJobDetailByActivityResponse.DataBean> dataBeanList = response.body().getData();
+                            dataBeanList = response.body().getData();
 
 
                             if(dataBeanList != null && dataBeanList.size()>0){
@@ -333,7 +375,7 @@ public class ActivityJobListActivity extends AppCompatActivity implements OnMapR
     private void setView(List<GetJobDetailByActivityResponse.DataBean> dataBeanList) {
         rv_jobdetaillist.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         rv_jobdetaillist.setItemAnimator(new DefaultItemAnimator());
-        ABJobDetailListAdapter abJobDetailListAdapter = new ABJobDetailListAdapter(this, dataBeanList,status,TAG,form_type,activity_id,UKEY,new_count,pause_count,UKEY_DESC);
+        abJobDetailListAdapter = new ABJobDetailListAdapter(this, dataBeanList,status,TAG,form_type,activity_id,UKEY,new_count,pause_count,UKEY_DESC);
         rv_jobdetaillist.setAdapter(abJobDetailListAdapter);
 
     }

@@ -21,6 +21,7 @@ import com.triton.johnsonapp.Forms.JointInspectorInputFormActivity;
 import com.triton.johnsonapp.Forms.RowBasedInputFormActivity;
 import com.triton.johnsonapp.R;
 import com.triton.johnsonapp.activity.SubGroupListActivity;
+import com.triton.johnsonapp.responsepojo.ActivityGetListNumberResponse;
 import com.triton.johnsonapp.responsepojo.GroupDetailManagementResponse;
 
 import java.util.List;
@@ -49,6 +50,12 @@ public class GroupListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHol
         this.status = status;
         this.fromactivity = fromactivity;
 
+    }
+
+    public void filterList(List<GroupDetailManagementResponse.DataBean> filterllist)
+    {
+        dataBeanList = filterllist;
+        notifyDataSetChanged();
     }
 
     @NonNull
