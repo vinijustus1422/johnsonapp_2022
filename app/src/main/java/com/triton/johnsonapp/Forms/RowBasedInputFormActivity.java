@@ -5,15 +5,24 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,18 +34,23 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.github.tntkhang.fullscreenimageview.library.FullScreenImageViewActivity;
 import com.google.gson.Gson;
 import com.triton.johnsonapp.R;
+import com.triton.johnsonapp.activity.FullScreenImageActivity;
 import com.triton.johnsonapp.activity.GroupListActivity;
 import com.triton.johnsonapp.activitybased.ActivityJobListActivity;
 import com.triton.johnsonapp.adapter.RowBasedArrayListAdapter;
 import com.triton.johnsonapp.api.APIInterface;
 import com.triton.johnsonapp.api.RetrofitClient;
+import com.triton.johnsonapp.interfaces.GetSpinnerListener;
 import com.triton.johnsonapp.model.RowDataFormModel;
 import com.triton.johnsonapp.requestpojo.RowBasedStroeDataRequest;
+import com.triton.johnsonapp.responsepojo.ActivityPumpChartDropdown;
 import com.triton.johnsonapp.responsepojo.FormDataStoreResponse;
 import com.triton.johnsonapp.session.SessionManager;
+import com.triton.johnsonapp.utils.ConnectionDetector;
 import com.triton.johnsonapp.utils.RestUtils;
 
 
@@ -120,10 +134,16 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
     @BindView(R.id.btn_save)
     Button btn_save;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.engineerPhone)
+    EditText engineerPhoneno;
+
+    GetSpinnerListener getPlumSpinnerListener;
+
     ArrayList<RowDataFormModel> rowdatalist = new ArrayList<>();
 
     String string_value,message,service_id,activity_id,job_id,group_id,subgroup_id,group_detail_name;
-
+    ArrayList<String> imageArrayList = new ArrayList<>();
     int i=0;
     private Dialog dialog;
     private String userid;
@@ -141,9 +161,12 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
 
     private int new_count;
     private int pause_count;
-
+    private int form_type;
     Spinner drp_value;
-
+    String networkStatus = "";
+    private String fullScreenInd;
+    private String engineerPhone;
+    private String image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,7 +193,7 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
             status = extras.getString("status");
             fromactivity = extras.getString("fromactivity");
             UKEY = extras.getString("UKEY");
-
+            form_type = extras.getInt("form_type");
             job_detail_no = extras.getString("job_detail_no");
             UKEY_DESC = extras.getString("UKEY_DESC");
 
@@ -202,6 +225,18 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
                 txt_job_no.setText("Job No : "+job_detail_no);
             }
         }
+
+        networkStatus = ConnectionDetector.getConnectivityStatusString(getApplicationContext());
+        if (networkStatus.equalsIgnoreCase("Not connected to Internet")) {
+            Toasty.warning(getApplicationContext(),"No Internet",Toasty.LENGTH_LONG).show();
+
+        }
+        else {
+            activitypumpchartdropdowncall();
+
+
+        }
+
         txt_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -211,9 +246,56 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
         });
 
         drp_value = findViewById(R.id.spr_dropdown);
-        String [] leavecode = {"Select Value","ACC","ANL"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, leavecode);
-        drp_value.setAdapter(adapter);
+        engineerPhoneno = findViewById(R.id.engineerPhone);
+        engineerPhoneno.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.w(TAG," s---> : "+charSequence.toString());
+                engineerPhone = charSequence.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+
+        Log.w(TAG,"Phone number---"+engineerPhone);
+        drp_value.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Log.w(TAG,"Dropdown Value---"+adapterView.getItemAtPosition(i).toString());
+
+                Log.w(TAG,"Dropdown Value count---"+i);
+                if(i==0)
+                {
+                    Log.w(TAG,"i size---"+i);
+                }else
+                {
+                    image = imageArrayList.get(i);
+                    Log.w(TAG,"iMAGE---"+image);
+
+                    Glide.with(RowBasedInputFormActivity.this)
+                            .load(image)
+                            .into(img_load);
+                }
+
+                //img_add.setBackgroundResource("https://kubalubra.is/wp-content/uploads/2017/11/default-thumbnail.jpg");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         img_add.setOnClickListener(new View.OnClickListener() {
             @SuppressLint({"NewApi", "ResourceAsColor"})
@@ -285,21 +367,37 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
             }
         });
 
+//        img_load.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bitmap image=((BitmapDrawable)img_load.getDrawable()).getBitmap();
+//                Log.w(TAG,"IMAGE---"+image);
+//                ArrayList<String> uriString = new ArrayList<>();
+//
+//                uriString.add("http://smart.johnsonliftsltd.com:3000/api/uploads/sign.png");
+//                //Intent fullImageIntent = new Intent(RowBasedInputFormActivity.this, FullScreenImageViewActivity.class);
+//                Intent fullImageIntent = new Intent(RowBasedInputFormActivity.this, FullScreenImageActivity.class);
+//                 // uriString is an ArrayList<String> of URI of all images
+//                fullImageIntent.putExtra(FullScreenImageActivity.URI_LIST_DATA, imageArrayList);
+//               // pos is the position of image will be showned when open
+//                fullImageIntent.putExtra(FullScreenImageActivity.IMAGE_FULL_SCREEN_CURRENT_POS, 0);
+//                startActivity(fullImageIntent);
+//            }
+//        });
+
         img_load.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                ArrayList<String> uriString = new ArrayList<>();
-
-                uriString.add("https://kubalubra.is/wp-content/uploads/2017/11/default-thumbnail.jpg");
-                Intent fullImageIntent = new Intent(RowBasedInputFormActivity.this, FullScreenImageViewActivity.class);
-                 // uriString is an ArrayList<String> of URI of all images
-                fullImageIntent.putExtra(FullScreenImageViewActivity.URI_LIST_DATA, uriString);
-               // pos is the position of image will be showned when open
-                fullImageIntent.putExtra(FullScreenImageViewActivity.IMAGE_FULL_SCREEN_CURRENT_POS, 0);
-                startActivity(fullImageIntent);
+            public void onClick(View view) {
+                Log.w(TAG,"iMAGE11111---"+view);
+                String uriString = image;
+                Log.w(TAG,"IMAGE GET---"+uriString);
+                Intent fullScreenIntent = new Intent(RowBasedInputFormActivity.this, FullScreenImageActivity.class);
+                fullScreenIntent.setData(Uri.parse(uriString));
+                startActivity(fullScreenIntent);
             }
         });
+
+
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @SuppressLint({"NewApi", "ResourceAsColor"})
@@ -314,6 +412,59 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
                     toast.show();
 
                 }
+
+            }
+        });
+    }
+
+    private void activitypumpchartdropdowncall() {
+        dialog = new Dialog(RowBasedInputFormActivity.this, R.style.NewProgressDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.progroess_popup);
+        dialog.show();
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<ActivityPumpChartDropdown> call = apiInterface.activityGetPumpChartDropdownResponseCall();
+        Log.w(TAG,"Pumbchart Dropdown url  :%s"+" "+ call.request().url().toString());
+        call.enqueue(new Callback<ActivityPumpChartDropdown>() {
+            @Override
+            public void onResponse(Call<ActivityPumpChartDropdown> call, Response<ActivityPumpChartDropdown> response) {
+                Log.w(TAG,"Pumbchart Dropdown Response" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    message = response.body().getMessage();
+                    if (200 == response.body().getCode()) {
+                        if(response.body().getData() != null){
+                            dialog.dismiss();
+                            List<ActivityPumpChartDropdown.DataBean> dataBeanList = response.body().getData();
+                            if(dataBeanList != null && dataBeanList.size()>0){
+
+                                Log.w(TAG,"Size--"+dataBeanList.size());
+                                ArrayList<String> arrayList = new ArrayList<>();
+                                arrayList.add("Select Value");
+                                for (int i = 0; i < dataBeanList.size(); i++) {
+                                    String string = dataBeanList.get(i).getName();
+                                    Log.w(TAG, "spr string-->" + string);
+                                    arrayList.add(string);
+
+                                }
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(RowBasedInputFormActivity.this, android.R.layout.simple_spinner_item, arrayList);
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                drp_value.setAdapter(adapter);
+
+                                imageArrayList.add("");
+                                for (int i = 0; i < dataBeanList.size(); i++) {
+                                    String string = dataBeanList.get(i).getImg_url();
+                                    Log.w(TAG, "iMAGE  string-->" +i+ string);
+                                    imageArrayList.add(string);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ActivityPumpChartDropdown> call, Throwable t) {
 
             }
         });
@@ -343,12 +494,14 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         if(fromactivity != null && fromactivity.equalsIgnoreCase("ABCustomerDetailsActivity")){
                             Intent intent = new Intent(RowBasedInputFormActivity.this, ActivityJobListActivity.class);
-                            intent.putExtra("activity_id", activity_id);
+//                            intent.putExtra("activity_id", activity_id);
+                            intent.putExtra("activity_id",group_id);
                             intent.putExtra("job_id", job_id);
                             intent.putExtra("status", status);
                             intent.putExtra("UKEY", UKEY);
                             intent.putExtra("new_count",new_count);
                             intent.putExtra("pause_count",pause_count);
+                            intent.putExtra("form_type",form_type);
                             startActivity(intent);
                             overridePendingTransition(R.anim.new_right, R.anim.new_left);
                             finish();
@@ -477,8 +630,8 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
         rowBasedStroeDataRequest.setPause_time("");
         rowBasedStroeDataRequest.setStop_time("");
         rowBasedStroeDataRequest.setStorage_status("");
-        rowBasedStroeDataRequest.setDate_of_create("");
-        rowBasedStroeDataRequest.setDate_of_update("");
+        rowBasedStroeDataRequest.setDate_of_create(engineerPhone);
+        rowBasedStroeDataRequest.setDate_of_update(drp_value.getSelectedItem().toString());
         rowBasedStroeDataRequest.setCreated_by("");
         rowBasedStroeDataRequest.setUpdated_by("");
         rowBasedStroeDataRequest.setUpdate_reason("");

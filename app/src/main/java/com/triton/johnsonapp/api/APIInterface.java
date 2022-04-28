@@ -30,6 +30,7 @@ import com.triton.johnsonapp.requestpojo.SubGroupDetailManagementRequest;
 import com.triton.johnsonapp.requestpojo.SubordActivityFormReqest;
 import com.triton.johnsonapp.responsepojo.ActivityGetListNumberResponse;
 import com.triton.johnsonapp.responsepojo.ActivityListManagementResponse;
+import com.triton.johnsonapp.responsepojo.ActivityPumpChartDropdown;
 import com.triton.johnsonapp.responsepojo.CheckDataStoreResponse;
 import com.triton.johnsonapp.responsepojo.FetchRecordByUserIDResponse;
 import com.triton.johnsonapp.responsepojo.FileUploadResponse;
@@ -216,4 +217,8 @@ public interface APIInterface {
     /*Version Check*/
     @GET("activity/getlatest_version")
     Call<GetFetchLatestVersionResponse> getlatestversionrequestcall();
+
+    /*Pumbchart Dropdown*/
+    @GET("activity/pump_chart_dropdown")
+    Call<ActivityPumpChartDropdown> activityGetPumpChartDropdownResponseCall();
 }

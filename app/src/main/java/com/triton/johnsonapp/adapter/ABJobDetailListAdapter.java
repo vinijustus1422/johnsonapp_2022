@@ -58,6 +58,12 @@ public class ABJobDetailListAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
     }
 
+    public void filterList(List<GetJobDetailByActivityResponse.DataBean> filterllist)
+    {
+        dataBeanList = filterllist;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

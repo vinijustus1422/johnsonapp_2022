@@ -146,4 +146,8 @@
         <item name="android:layout_height">@dimen/_45dp</item>
     </style>
 
+    <string name="title_activity_full_screen_image">FullScreenImageActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

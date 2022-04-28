@@ -31,6 +31,7 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +95,9 @@ public class ActivityBasedActivity extends AppCompatActivity  implements OnMapRe
     @BindView(R.id.txt_logout)
     TextView txt_logout;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_logout)
+    LinearLayout ll_logout;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_activitybasedlist)
@@ -154,7 +158,12 @@ public class ActivityBasedActivity extends AppCompatActivity  implements OnMapRe
                 onBackPressed();
             }
         });
-
+        ll_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                session.logoutUser();
+            }
+        });
 
 
 

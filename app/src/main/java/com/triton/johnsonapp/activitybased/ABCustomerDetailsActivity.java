@@ -211,6 +211,7 @@ public class ABCustomerDetailsActivity extends AppCompatActivity {
                     intent.putExtra("job_detail_no",job_detail_no);
                     intent.putExtra("new_count",new_count);
                     intent.putExtra("pause_count",pause_count);
+                    intent.putExtra("form_type",form_type);
                     startActivity(intent);
                 }
                 else if(form_type == 4){

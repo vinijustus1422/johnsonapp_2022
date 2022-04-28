@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,6 +102,10 @@ public class ActivityJobListActivity extends AppCompatActivity implements OnMapR
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_logout)
+    LinearLayout ll_logout;
 
     Dialog dialog;
 
@@ -211,6 +216,12 @@ public class ActivityJobListActivity extends AppCompatActivity implements OnMapR
             public void onClick(View v) {
 
                 onBackPressed();
+            }
+        });
+        ll_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                session.logoutUser();
             }
         });
 

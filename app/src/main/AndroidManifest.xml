@@ -41,11 +41,17 @@
         tools:ignore="AllowBackup"
         tools:targetApi="m">
         <activity
-            android:name=".DownloadapkfileActivity"
+            android:name=".activity.FullScreenImageActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".DownloadapkfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Forms.SubordActivityForm"
             android:exported="false"
