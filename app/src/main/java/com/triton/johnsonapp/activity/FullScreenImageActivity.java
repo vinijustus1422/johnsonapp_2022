@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -26,5 +27,10 @@ public class FullScreenImageActivity extends AppCompatActivity {
                         .into(fullScreenImageView);
             }
         }
+        //fullScreenImageView.setOnTouchListener((View.OnTouchListener) this);
     }
+
+//    @Override
+//    public boolean onTouch(View v, MotionEvent event)
+//    {
 }

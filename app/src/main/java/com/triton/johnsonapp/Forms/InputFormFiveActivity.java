@@ -565,6 +565,7 @@ public class InputFormFiveActivity extends AppCompatActivity implements GetAccep
             @Override
             public void onClick(View view) {
                 edt_search.setText("");
+                rv_formfive.setVisibility(View.VISIBLE);
                 ViewInfoRequestCall();
                 img_clearsearch.setVisibility(View.INVISIBLE);
             }

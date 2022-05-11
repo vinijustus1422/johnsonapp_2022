@@ -251,6 +251,7 @@ public class InputValueFormListActivity extends AppCompatActivity implements Get
             Log.w(TAG,"subgroup_id"+subgroup_id);
             fromactivity = extras.getString("fromactivity");
             UKEY = extras.getString("UKEY");
+            Log.w(TAG,"UKSEY----"+UKEY);
             UKEY_DESC = extras.getString("UKEY_DESC");
             new_count = extras.getInt("new_count");
             pause_count = extras.getInt("pause_count");

@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.FullScreenImageActivity">
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/fullScreenImageView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

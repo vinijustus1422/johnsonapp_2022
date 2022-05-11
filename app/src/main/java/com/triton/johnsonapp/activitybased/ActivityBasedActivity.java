@@ -201,6 +201,7 @@ public class ActivityBasedActivity extends AppCompatActivity  implements OnMapRe
             @Override
             public void onClick(View view) {
                 edt_search.setText("");
+                rv_activitybasedlist.setVisibility(View.VISIBLE);
                 activityGetListNumberResponseCall();
                 img_clearsearch.setVisibility(View.INVISIBLE);
             }

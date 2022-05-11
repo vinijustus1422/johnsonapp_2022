@@ -204,6 +204,7 @@ public class ActivityJobListActivity extends AppCompatActivity implements OnMapR
             @Override
             public void onClick(View view) {
                 edt_search.setText("");
+                rv_jobdetaillist.setVisibility(View.VISIBLE);
                 getJobDetailByActivityResponseCall();
                 img_clearsearch.setVisibility(View.INVISIBLE);
             }

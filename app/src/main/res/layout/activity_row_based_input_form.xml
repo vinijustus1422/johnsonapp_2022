@@ -279,6 +279,7 @@
                             android:hint="Phone Number"
                             android:inputType="number"
                             android:padding="@dimen/_10dp"
+                            android:minLines="13"
                             android:textColor="@color/black" />
                     </LinearLayout>
 

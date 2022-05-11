@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         webView.setVisibility(View.GONE);
         btn_goback.setVisibility(View.GONE);
+        btn_activity.setVisibility(View.GONE);
         //btn_webview.setVisibility(View.INVISIBLE);
 
         ll_logout.setOnClickListener(new View.OnClickListener() {

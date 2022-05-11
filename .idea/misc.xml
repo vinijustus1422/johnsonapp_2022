@@ -28,14 +28,14 @@
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_joint_inspector_input_form.xml" value="0.22826086956521738" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_login.xml" value="0.3375" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_row_based_input_form.xml" value="0.33" />
+        <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_row_based_input_form.xml" value="0.1" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_splash.xml" value="0.22826086956521738" />
-        <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_status.xml" value="0.1641337386018237" />
+        <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_status.xml" value="0.1" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_sub_group_list.xml" value="0.22826086956521738" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_subord_form.xml" value="0.33" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/activity_view_info_details.xml" value="0.3375" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/adapter_activitybased_list.xml" value="0.3375" />
-        <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/adapter_fieldlist.xml" value="0.3375" />
+        <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/adapter_fieldlist.xml" value="0.1" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/adapter_from_five.xml" value="0.3375" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/adapter_image_rowdatalist.xml" value="0.3375" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/adapter_liftinputlist.xml" value="0.2463768115942029" />
@@ -51,6 +51,7 @@
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/permission_layout.xml" value="0.3375" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/progroess_popup.xml" value="0.3375" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/layout/startjob_popup_layout.xml" value="0.3375" />
+        <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/menu/activity_main_drawer.xml" value="0.27692307692307694" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/menu/maintain_draw_view.xml" value="0.16875" />
         <entry key="..\:/vini/smart_johnson_vini_2022/app/src/main/res/menu/search_menu.xml" value="0.18489583333333334" />
       </map>

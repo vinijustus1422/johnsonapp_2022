@@ -167,6 +167,7 @@ public class AllJobListActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onClick(View view) {
                 edt_search.setText("");
+                rv_jobdetaillist.setVisibility(View.VISIBLE);
                 jobnomanagmentgetlistallResponseCall();
                 img_clearsearch.setVisibility(View.INVISIBLE);
             }

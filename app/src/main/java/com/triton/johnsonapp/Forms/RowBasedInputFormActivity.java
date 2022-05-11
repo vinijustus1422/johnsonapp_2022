@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -46,9 +48,11 @@ import com.triton.johnsonapp.api.APIInterface;
 import com.triton.johnsonapp.api.RetrofitClient;
 import com.triton.johnsonapp.interfaces.GetSpinnerListener;
 import com.triton.johnsonapp.model.RowDataFormModel;
+import com.triton.johnsonapp.requestpojo.GetFieldListRequest;
 import com.triton.johnsonapp.requestpojo.RowBasedStroeDataRequest;
 import com.triton.johnsonapp.responsepojo.ActivityPumpChartDropdown;
 import com.triton.johnsonapp.responsepojo.FormDataStoreResponse;
+import com.triton.johnsonapp.responsepojo.GetFieldListResponse;
 import com.triton.johnsonapp.session.SessionManager;
 import com.triton.johnsonapp.utils.ConnectionDetector;
 import com.triton.johnsonapp.utils.RestUtils;
@@ -57,6 +61,7 @@ import com.triton.johnsonapp.utils.RestUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,6 +74,7 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
 
 
     private String TAG ="RowBasedInputFormActivity";
+    Dialog submittedSuccessfulalertdialog;
 /*
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_load)
@@ -137,7 +143,7 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.engineerPhone)
     EditText engineerPhoneno;
-
+    private String userrole = "";
     GetSpinnerListener getPlumSpinnerListener;
 
     ArrayList<RowDataFormModel> rowdatalist = new ArrayList<>();
@@ -167,6 +173,8 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
     private String fullScreenInd;
     private String engineerPhone;
     private String image;
+
+    RowBasedStroeDataRequest.DataBean dataBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -232,11 +240,12 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
 
         }
         else {
-            activitypumpchartdropdowncall();
+            getfieldListResponseCall();
+
 
 
         }
-
+        activitypumpchartdropdowncall();
         txt_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -247,6 +256,7 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
 
         drp_value = findViewById(R.id.spr_dropdown);
         engineerPhoneno = findViewById(R.id.engineerPhone);
+        boolean check = false;
         engineerPhoneno.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -257,6 +267,11 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 Log.w(TAG," s---> : "+charSequence.toString());
                 engineerPhone = charSequence.toString();
+                if(engineerPhone.length()>13)
+                {
+                    engineerPhoneno.setText("");
+                    Toast.makeText(RowBasedInputFormActivity.this,"Only 13 Numbers are Allowed",Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -342,7 +357,7 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
 
                     Log.w(TAG,"rowdatalist" + new Gson().toJson(rowdatalist));
 
-                    RowBasedStroeDataRequest.DataBean dataBean = new RowBasedStroeDataRequest.DataBean();
+                    dataBean = new RowBasedStroeDataRequest.DataBean();
                     dataBean.setDimx_one(edt_dimx1.getText().toString());
                     dataBean.setDimx_two(edt_dimx2.getText().toString());
                     dataBean.setDimx_three(edt_dimx3.getText().toString());
@@ -417,6 +432,75 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
         });
     }
 
+    public void getfieldListResponseCall() {
+        dialog = new Dialog(RowBasedInputFormActivity.this, R.style.NewProgressDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.progroess_popup);
+        dialog.show();
+
+        //Creating an object of our api interface
+        APIInterface apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<GetFieldListResponse> call = apiInterface.getfieldListResponseCall(RestUtils.getContentType(), getFieldListRequest());
+        Log.w(TAG, "url  :%s" + call.request().url().toString());
+
+        call.enqueue(new Callback<GetFieldListResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<GetFieldListResponse> call, @NonNull Response<GetFieldListResponse> response) {
+
+
+                if (response.body() != null) {
+                    Log.w(TAG, "Submitted_status " +response.body().getSubmitted_status());
+                    if(response.body().getSubmitted_status() != null){
+                        String Submitted_status = response.body().getSubmitted_status();
+                        if(Submitted_status != null && Submitted_status.equalsIgnoreCase("Not Submitted")){
+                            dialog.dismiss();
+
+
+                        }else{
+                            dialog.dismiss();
+                            Log.w(TAG, "Submitted_status else--> " +response.body().getSubmitted_status());
+                            showSubmittedSuccessful();
+                        }
+                    }
+
+
+
+
+                }
+
+
+            }
+
+
+            @Override
+            public void onFailure(@NonNull Call<GetFieldListResponse> call, @NonNull Throwable t) {
+                dialog.dismiss();
+                Log.w(TAG, "GetFieldListResponse flr" + t.getMessage());
+            }
+        });
+
+    }
+
+    private GetFieldListRequest getFieldListRequest() {
+
+        /*
+         * group_id : 61c1e5e09934282617679543
+         * subgroup_id
+         * job_id
+         * user_id
+         */
+        GetFieldListRequest getFieldListRequest = new GetFieldListRequest();
+        getFieldListRequest.setGroup_id(group_id);
+        getFieldListRequest.setSub_group_id(subgroup_id);
+        getFieldListRequest.setJob_id(job_id);
+        getFieldListRequest.setUser_id(userid);
+        getFieldListRequest.setUser_role(userrole);
+
+        Log.w(TAG, "GetFieldListRequest " + new Gson().toJson(getFieldListRequest));
+        return getFieldListRequest;
+    }
+
     private void activitypumpchartdropdowncall() {
         dialog = new Dialog(RowBasedInputFormActivity.this, R.style.NewProgressDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -476,7 +560,7 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
 
         rv_rowdatalist.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         rv_rowdatalist.setItemAnimator(new DefaultItemAnimator());
-        RowBasedArrayListAdapter jobDetailListAdapter = new RowBasedArrayListAdapter(this, rowdatalist);
+        RowBasedArrayListAdapter jobDetailListAdapter = new RowBasedArrayListAdapter(this, rowdatalist,Data);
         rv_rowdatalist.setAdapter(jobDetailListAdapter);
     }
 
@@ -546,41 +630,45 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
 
                 Log.w(TAG, "getformdataListResponseCall" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
-                    message = response.body().getMessage();
-                    if (200 == response.body().getCode()) {
-                        if (response.body().getData() != null) {
-                            Toasty.success(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
-                            if(fromactivity != null && fromactivity.equalsIgnoreCase("ABCustomerDetailsActivity")){
-                                Intent intent = new Intent(RowBasedInputFormActivity.this, ActivityJobListActivity.class);
-                                intent.putExtra("activity_id", activity_id);
-                                intent.putExtra("job_id", job_id);
-                                intent.putExtra("status", status);
-                                intent.putExtra("UKEY", UKEY);
-                                intent.putExtra("new_count",new_count);
-                                intent.putExtra("pause_count",pause_count);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.new_right, R.anim.new_left);
-                                finish();
-                                dialog.dismiss();
-                            }else {
-                                Intent intent = new Intent(RowBasedInputFormActivity.this, GroupListActivity.class);
-                                intent.putExtra("activity_id", activity_id);
-                                intent.putExtra("job_id", job_id);
-                                intent.putExtra("status", status);
-                                intent.putExtra("fromactivity", fromactivity);
-                                intent.putExtra("UKEY", UKEY);
-                                intent.putExtra("new_count",new_count);
-                                intent.putExtra("pause_count",pause_count);
-                                startActivity(intent);
-                                finish();
-                                dialog.dismiss();
+                    if(status != null && status.equalsIgnoreCase("Not Submitted")) {
+                        message = response.body().getMessage();
+                        if (200 == response.body().getCode()) {
+                            if (response.body().getData() != null) {
+                                Toasty.success(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
+                                if (fromactivity != null && fromactivity.equalsIgnoreCase("ABCustomerDetailsActivity")) {
+                                    Intent intent = new Intent(RowBasedInputFormActivity.this, ActivityJobListActivity.class);
+                                    intent.putExtra("activity_id", activity_id);
+                                    intent.putExtra("job_id", job_id);
+                                    intent.putExtra("status", status);
+                                    intent.putExtra("UKEY", UKEY);
+                                    intent.putExtra("new_count", new_count);
+                                    intent.putExtra("pause_count", pause_count);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.new_right, R.anim.new_left);
+                                    finish();
+                                    dialog.dismiss();
+                                } else {
+                                    Intent intent = new Intent(RowBasedInputFormActivity.this, GroupListActivity.class);
+                                    intent.putExtra("activity_id", activity_id);
+                                    intent.putExtra("job_id", job_id);
+                                    intent.putExtra("status", status);
+                                    intent.putExtra("fromactivity", fromactivity);
+                                    intent.putExtra("UKEY", UKEY);
+                                    intent.putExtra("new_count", new_count);
+                                    intent.putExtra("pause_count", pause_count);
+                                    startActivity(intent);
+                                    finish();
+                                    dialog.dismiss();
+                                }
                             }
+
+
                         }
-
-
-                    } else {
+                    }
+                    else {
                         dialog.dismiss();
-                        Toasty.warning(getApplicationContext(), "" + message, Toasty.LENGTH_LONG).show();
+                        Log.w(TAG, "Submitted_status else--> " +response.body().getStatus());
+                        showSubmittedSuccessful();
 
 
                         //showErrorLoading(response.body().getMessage());
@@ -597,6 +685,42 @@ public class RowBasedInputFormActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+    private void showSubmittedSuccessful() {
+        Log.w(TAG, "showSubmittedSuccessful -->+");
+        submittedSuccessfulalertdialog = new Dialog(RowBasedInputFormActivity.this);
+        submittedSuccessfulalertdialog.setCancelable(false);
+        submittedSuccessfulalertdialog.setContentView(R.layout.alert_sucess_clear);
+        Button btn_goback = submittedSuccessfulalertdialog.findViewById(R.id.btn_goback);
+        TextView txt_success_msg = submittedSuccessfulalertdialog.findViewById(R.id.txt_success_msg);
+        txt_success_msg.setText("All data submitted successfully.");
+        btn_goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submittedSuccessfulalertdialog.dismiss();
+                Intent intent = new Intent(RowBasedInputFormActivity.this, GroupListActivity.class);
+                intent.putExtra("activity_id", activity_id);
+                intent.putExtra("job_id", job_id);
+                intent.putExtra("group_id",group_id);
+                intent.putExtra("status", status);
+                intent.putExtra("fromactivity", fromactivity);
+                intent.putExtra("UKEY",UKEY);
+                intent.putExtra("new_count",new_count);
+                intent.putExtra("pause_count",pause_count);
+                startActivity(intent);
+                overridePendingTransition(R.anim.new_right, R.anim.new_left);
+                finish();
+
+            }
+        });
+        Objects.requireNonNull(submittedSuccessfulalertdialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        submittedSuccessfulalertdialog.show();
+
+
+
+
+
 
     }
 

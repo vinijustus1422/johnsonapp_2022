@@ -269,6 +269,7 @@ public class GroupListActivity extends AppCompatActivity  implements OnMapReadyC
             @Override
             public void onClick(View view) {
                 edt_search.setText("");
+                rv_grouplist.setVisibility(View.VISIBLE);
                 groupdetailmanagmentResponseCall();
                 img_clearsearch.setVisibility(View.INVISIBLE);
             }
